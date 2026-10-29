@@ -1,0 +1,38 @@
+﻿<UserControl x:Class="Labb_3code_along.View.PlayerView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Labb_3code_along.View"
+             mc:Ignorable="d" 
+              DataContext="{Binding PlayerViewModel}"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid Margin="20">
+        <StackPanel>
+            <TextBlock  Text=" Fråga 1 av  2"
+                        FontSize="16"
+                        HorizontalAlignment="Right"
+                        Margin="5"/>
+            <TextBlock Text=" Vad heter Sveriges huvudstad?"
+                       FontSize="24"
+                       FontWeight="Bold"
+                       TextWrapping="Wrap"
+                       Margin="5,20"/>
+            <TextBlock Text="Poäng:0"/>
+            <TextBlock Text="Tid kvar:__"/>
+
+          <UniformGrid Rows="2" Columns="2">
+            <Button Content="Stockholm" Margin="5" Padding="10"/>
+            <Button Content="Oslo" Margin="5" Padding="10"/>
+            <Button Content="Göteborg" Margin="5" Padding="10"/>
+            <Button Content="London" Margin="5" Padding="10"/>
+          </UniformGrid>
+
+
+
+
+
+        </StackPanel>
+        
+    </Grid>
+</UserControl>
