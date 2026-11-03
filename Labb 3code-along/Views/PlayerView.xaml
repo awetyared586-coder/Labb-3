@@ -9,24 +9,45 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid Margin="20">
         <StackPanel>
-            <TextBlock  Text=" Fråga 1 av  2"
+
+            <TextBlock  Text="{Binding QuestionProgress }"
                         FontSize="16"
                         HorizontalAlignment="Right"
                         Margin="5"/>
-            <TextBlock Text=" Vad heter Sveriges huvudstad?"
+
+            <TextBlock Text="{Binding CurrentQuestionText}"
                        FontSize="24"
                        FontWeight="Bold"
                        TextWrapping="Wrap"
                        Margin="5,20"/>
-            <TextBlock Text="Poäng:0"/>
+
+            <TextBlock Text="Poäng: {Binding Score}"/>
             <TextBlock Text="Tid kvar:__"/>
 
+            
           <UniformGrid Rows="2" Columns="2">
-            <Button Content="Stockholm" Margin="5" Padding="10"/>
-            <Button Content="Oslo" Margin="5" Padding="10"/>
-            <Button Content="Göteborg" Margin="5" Padding="10"/>
-            <Button Content="London" Margin="5" Padding="10"/>
-          </UniformGrid>
+                <Button Content="{Binding CorrectAnswer}"
+            Margin="5" Padding="10"
+            Command="{Binding AnswerCommand}"
+            CommandParameter="{Binding Content, RelativeSource={RelativeSource Self}}"/>
+
+                <Button Content="{Binding IncorrectAnswer1}"
+            Margin="5" Padding="10"
+            Command="{Binding AnswerCommand}"
+            CommandParameter="{Binding Content, RelativeSource={RelativeSource Self}}"/>
+
+                <Button Content="{Binding IncorrectAnswer2}"
+            Margin="5" Padding="10"
+            Command="{Binding AnswerCommand}"
+            CommandParameter="{Binding Content, RelativeSource={RelativeSource Self}}"/>
+
+                <Button Content="{Binding IncorrectAnswer3}"
+            Margin="5" Padding="10"
+            Command="{Binding AnswerCommand}"
+            CommandParameter="{Binding Content, RelativeSource={RelativeSource Self}}"/>
+
+
+            </UniformGrid>
 
 
 
