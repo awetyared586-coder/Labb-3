@@ -1,5 +1,4 @@
-﻿using Labb_3code_along.Moddel;
-using Labb_3code_along.Models;
+﻿using Labb_3code_along.Models;
 using System.Collections.ObjectModel;
 
 
@@ -13,7 +12,13 @@ internal class MainWindowViewModel : ViewModelBase
     public QuestionPackViewModel ActivePack
     {
         get => _activePack;
-        set => SetProperty(ref _activePack, value);
+        set
+        {
+            if (SetProperty(ref _activePack, value))
+            {
+                ConfigurationViewModel?.RaiseActivePackChanged();
+            }
+        }
     }
 
     public PlayerViewModel? PlayerViewModel { get; }

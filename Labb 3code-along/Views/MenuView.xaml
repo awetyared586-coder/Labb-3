@@ -6,8 +6,8 @@
              xmlns:local="clr-namespace:Labb_3code_along.View"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    
-    
+
+
     <Grid>
         <Menu>
             <MenuItem Header="_File">
@@ -15,6 +15,11 @@
                 <MenuItem Header="E_xit" InputGestureText="Alt+F4" />
             </MenuItem>
             <MenuItem Header="_Edit">
+                <MenuItem 
+                    Header="Set Pack _Name" 
+                    InputGestureText="Ctrl+N"
+                    Command="{Binding ConfigurationViewModel.ChangePackNameCommand}"
+                />
                 <MenuItem Header="Copy"/>
                 <MenuItem Header="Paste"/>
                 <MenuItem Header="Test">

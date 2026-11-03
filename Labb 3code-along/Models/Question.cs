@@ -5,7 +5,7 @@ using System.Text;
 namespace Labb_3code_along.Models;
 
 
-class Question
+ class Question
 {
     public Question(string query, string correctAnswer, string incorrectAnswer1, string incorrectAnswer2, string incorrectAnswer3)
     {

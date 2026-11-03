@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Labb_3code_along.Moddel;
+namespace Labb_3code_along.Models;
 
 internal enum Difficulty { Easy, Medium, Hard };
 

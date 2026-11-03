@@ -19,7 +19,7 @@
         <ListBox 
                   Grid.Column="0"
                   ItemsSource="{Binding ActivePack.Questions}"
-                  SelectedItem="{Binding SelectedQuestion}">
+                  SelectedItem="{Binding SelectedQuestion, Mode=TwoWay}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding Query}"/>
@@ -27,14 +27,25 @@
             </ListBox.ItemTemplate>
         </ListBox>
 
-        <StackPanel Grid.Column="1">
-            <TextBox Margin="5" Text="{Binding SelectedQuestion.Query, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-            <TextBox Margin="5" Text="{Binding SelectedQuestion.CorrectAnswer,  UpdateSourceTrigger=PropertyChanged}" />
-            <TextBox Margin="5" Text="{Binding SelectedQuestion.IncorrectAnswers[0], UpdateSourceTrigger=PropertyChanged}" />
-            <TextBox Margin="5" Text="{Binding SelectedQuestion.IncorrectAnswers[1], UpdateSourceTrigger=PropertyChanged}" />
-            <TextBox Margin="5" Text="{Binding SelectedQuestion.IncorrectAnswers[2], UpdateSourceTrigger=PropertyChanged}" />
+        <StackPanel Grid.Column="1" 
+                    IsEnabled="{Binding HasSelectedQuestion}">
+            <TextBlock Text="Fråga:" Margin="20,70,10,0"/>
+            <TextBox  Margin="20 0 10 20 " Text="{Binding SelectedQuestion.Query, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <TextBlock Text="Rätt svar:" Margin="50,10,50,0"/>
+            <TextBox Margin="50 10 50 0 " Text="{Binding SelectedQuestion.CorrectAnswer,  Mode=TwoWay,  UpdateSourceTrigger=PropertyChanged}" />
+            <TextBlock Text="Felaktigt svar 1:" Margin="50,10,50,0"/>
+            <TextBox Margin="50 10 50 0 " Text="{Binding SelectedQuestion.IncorrectAnswers[0], Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <TextBlock Text="Felaktigt svar 2:" Margin="50,10,50,0"/>
+            <TextBox Margin="50 10 50 0 " Text="{Binding SelectedQuestion.IncorrectAnswers[1], Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+            <TextBlock Text="Felaktigt svar 3:" Margin="50,10,50,0"/>
+            <TextBox Margin="50 10 50 0 " Text="{Binding SelectedQuestion.IncorrectAnswers[2], Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
 
         </StackPanel>
+        
 
     </Grid>
+    
+    
+    
+    
 </UserControl>

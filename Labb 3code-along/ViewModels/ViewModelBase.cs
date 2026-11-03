@@ -5,8 +5,6 @@ using System.Runtime.CompilerServices;
 
 namespace Labb_3code_along.ViewModels;
 
-
-
 internal class ViewModelBase : INotifyPropertyChanged
 {
     public event PropertyChangedEventHandler? PropertyChanged;

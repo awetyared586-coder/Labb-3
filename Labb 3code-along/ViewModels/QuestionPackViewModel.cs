@@ -1,7 +1,8 @@
-﻿using Labb_3code_along.Moddel;
+﻿
 using Labb_3code_along.Models;
 using System.Collections.ObjectModel;
-
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 
 
