@@ -29,22 +29,22 @@
                 <Button Content="{Binding CorrectAnswer}"
             Margin="5" Padding="10"
             Command="{Binding AnswerCommand}"
-            CommandParameter="{Binding Content, RelativeSource={RelativeSource Self}}"/>
+            CommandParameter="0"/>
 
                 <Button Content="{Binding IncorrectAnswer1}"
             Margin="5" Padding="10"
             Command="{Binding AnswerCommand}"
-            CommandParameter="{Binding Content, RelativeSource={RelativeSource Self}}"/>
+            CommandParameter="1"/>
 
                 <Button Content="{Binding IncorrectAnswer2}"
             Margin="5" Padding="10"
             Command="{Binding AnswerCommand}"
-            CommandParameter="{Binding Content, RelativeSource={RelativeSource Self}}"/>
+            CommandParameter="2"/>
 
                 <Button Content="{Binding IncorrectAnswer3}"
             Margin="5" Padding="10"
             Command="{Binding AnswerCommand}"
-            CommandParameter="{Binding Content, RelativeSource={RelativeSource Self}}"/>
+            CommandParameter="3"/>
 
 
             </UniformGrid>

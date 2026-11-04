@@ -19,6 +19,6 @@
         </Grid.RowDefinitions>
 
         <views:MenuView Grid.Row="0" />
-        <views:PlayerView Grid.Row="1"/>
+        <views:Confugration Grid.Row="1"/>
     </Grid>
 </Window>

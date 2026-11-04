@@ -9,6 +9,14 @@ internal class PlayerViewModel : ViewModelBase
     private int _currentQuestionIndex = 0;
     public int CurrentQuestionIndex => _currentQuestionIndex + 1;
     private int _score = 0;
+
+    private string[] _suffledAnswers = Array.Empty<string>();
+
+    private void ShuffleAnswers()
+    {
+        _suffledAnswers = new[] { CorrectAnswer, IncorrectAnswer1, IncorrectAnswer2, IncorrectAnswer3 };
+    }
+    
     public int score => _score;
 
 
@@ -36,17 +44,25 @@ internal class PlayerViewModel : ViewModelBase
 
     private void AnswerQuestion(object? parameter)
     {
-        string? answer = parameter?.ToString();
+        int answerIndex= int.Parse(parameter?.ToString()??"-1");
 
-        string correctAnswer = CurrentQuestion?.CorrectAnswer;
+        string? selectedAnswer = answerIndex switch
+        {
+            0 => CorrectAnswer,
+            1 => IncorrectAnswer1,
+            2 => IncorrectAnswer2,
+            3 => IncorrectAnswer3,
+            _ => null
+        };
 
-        bool isCorrect = answer == correctAnswer;
+        bool isCorrect = selectedAnswer == CorrectAnswer;
 
         if (isCorrect)
         {
             _score++;
-             
         }
+
+        
     }
     
 }
