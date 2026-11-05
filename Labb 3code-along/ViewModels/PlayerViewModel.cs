@@ -1,5 +1,8 @@
-﻿using Labb_3code_along.Models;
+﻿
+using Labb_3code_along.Models;
 using Labb_3code_along.Command;
+using System.Drawing;
+using System.Windows;
 namespace Labb_3code_along.ViewModels;
 
 internal class PlayerViewModel : ViewModelBase
@@ -9,15 +12,37 @@ internal class PlayerViewModel : ViewModelBase
     private int _currentQuestionIndex = 0;
     public int CurrentQuestionIndex => _currentQuestionIndex + 1;
     private int _score = 0;
+    private bool _hasAnswered = false;
+    private bool _isQuizFinished = false;
+    public bool IsQuizFinished => _isQuizFinished;
+   
+    private string[] _feedbackSymbols = new string[4];
+    public string[] FeedbackSymbols => _feedbackSymbols;
 
-    private string[] _suffledAnswers = Array.Empty<string>();
+    private string[] _shuffledAnswers = Array.Empty<string>();
 
     private void ShuffleAnswers()
     {
-        _suffledAnswers = new[] { CorrectAnswer, IncorrectAnswer1, IncorrectAnswer2, IncorrectAnswer3 };
+        _shuffledAnswers = new[] { CorrectAnswer, IncorrectAnswer1, IncorrectAnswer2, IncorrectAnswer3 };
+        Random.Shared.Shuffle(_shuffledAnswers);
+        
+    }
+    public String[] ShuffledAnswers => _shuffledAnswers;
+
+    public int Score => _score;
+    public string FinalResult => _isQuizFinished  
+        ?$"Du fick{_score} av {TotalQuestions} rätt!":"";
+    public bool IsQuizInProgress => !_isQuizFinished;
+   
+
+
+    private string _fedbackSymobol = "";
+    public string FeedbackSymbol
+    {
+        get => _fedbackSymobol;
+        set => SetProperty(ref _fedbackSymobol, value);
     }
     
-    public int score => _score;
 
 
 
@@ -33,36 +58,75 @@ internal class PlayerViewModel : ViewModelBase
     public int TotalQuestions => _mainWindowViewModel?.ActivePack.Questions.Count ?? 0;
     public string QuestionProgress => $"Fråga {CurrentQuestionIndex} av {TotalQuestions}";
     public RelayCommand AnswerCommand { get; }
+    public RelayCommand NextQuestionCommand { get; }
 
     public PlayerViewModel(MainWindowViewModel? mainWindowViewModel)
     {
         _mainWindowViewModel = mainWindowViewModel;
 
           AnswerCommand = new RelayCommand(AnswerQuestion);
+        NextQuestionCommand = new RelayCommand( _ => NextQuestion());
+
+        ShuffleAnswers();
 
     }
 
     private void AnswerQuestion(object? parameter)
     {
+        if (_hasAnswered)
+            return;
+        
         int answerIndex= int.Parse(parameter?.ToString()??"-1");
 
-        string? selectedAnswer = answerIndex switch
-        {
-            0 => CorrectAnswer,
-            1 => IncorrectAnswer1,
-            2 => IncorrectAnswer2,
-            3 => IncorrectAnswer3,
-            _ => null
-        };
+        _hasAnswered= true;
+       
+       
+        
+        
 
+        string? selectedAnswer = _shuffledAnswers[answerIndex];
+
+       
         bool isCorrect = selectedAnswer == CorrectAnswer;
 
         if (isCorrect)
         {
             _score++;
+            RaisePropertyChanged(nameof(Score));
+           
         }
 
+        _feedbackSymbols[answerIndex] = isCorrect ? "✓" : "✗";
+        _feedbackSymbols[Array.IndexOf(_shuffledAnswers, CorrectAnswer)] = "✓";
+        RaisePropertyChanged(nameof(FeedbackSymbols));
         
+
+
+
+
+    }
+    private void NextQuestion()
+    {
+        if (_currentQuestionIndex >= TotalQuestions - 1)
+        {
+            _isQuizFinished = true;
+            RaisePropertyChanged(nameof(IsQuizFinished));
+            RaisePropertyChanged(nameof(IsQuizInProgress));
+            RaisePropertyChanged(nameof(FinalResult));
+            return;
+
+        }
+
+
+        _currentQuestionIndex++;
+        ShuffleAnswers();
+        RaisePropertyChanged(nameof(ShuffledAnswers));
+        RaisePropertyChanged(nameof(CurrentQuestionText));
+        RaisePropertyChanged(nameof(QuestionProgress));
+        _feedbackSymbols = new string[4];
+        RaisePropertyChanged(nameof(FeedbackSymbols));
+        _hasAnswered = false;
+
     }
     
 }

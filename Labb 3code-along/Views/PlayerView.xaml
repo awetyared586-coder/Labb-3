@@ -7,8 +7,13 @@
              mc:Ignorable="d" 
               DataContext="{Binding PlayerViewModel}"
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVisibility"/>
+    </UserControl.Resources>
+    
     <Grid Margin="20">
-        <StackPanel>
+        <StackPanel Visibility="{Binding IsQuizInProgress, Converter={StaticResource BoolToVisibility}}">
+
 
             <TextBlock  Text="{Binding QuestionProgress }"
                         FontSize="16"
@@ -21,39 +26,97 @@
                        TextWrapping="Wrap"
                        Margin="5,20"/>
 
-            <TextBlock Text="Poäng: {Binding Score}"/>
-            <TextBlock Text="Tid kvar:__"/>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Poäng:"/>
+                <TextBlock Text="{Binding FeedbackSymbol}" 
+                           FontSize="24"
+                           Margin="5"/>
+                <TextBlock Text="{Binding Score}"/>
+
+                <TextBlock Text="Tid kvar:__"/>
+                
+            </StackPanel>
 
             
           <UniformGrid Rows="2" Columns="2">
-                <Button Content="{Binding CorrectAnswer}"
-            Margin="5" Padding="10"
-            Command="{Binding AnswerCommand}"
-            CommandParameter="0"/>
 
-                <Button Content="{Binding IncorrectAnswer1}"
-            Margin="5" Padding="10"
-            Command="{Binding AnswerCommand}"
-            CommandParameter="1"/>
+             <Button Margin="5" Padding="10"
+                         Command="{Binding AnswerCommand}"
+                         CommandParameter="0" >
+                 <Grid>
+                    <TextBlock Text="{Binding ShuffledAnswers[0]}"/>
+                    <TextBlock Text="{Binding FeedbackSymbols[0]}"
+                               HorizontalAlignment="Right"
+                               VerticalAlignment="Top"
+                               />
+                
 
-                <Button Content="{Binding IncorrectAnswer2}"
-            Margin="5" Padding="10"
-            Command="{Binding AnswerCommand}"
-            CommandParameter="2"/>
+                 </Grid>
 
-                <Button Content="{Binding IncorrectAnswer3}"
-            Margin="5" Padding="10"
-            Command="{Binding AnswerCommand}"
-            CommandParameter="3"/>
+             </Button>
+
+                <Button Margin="5" Padding="10"
+                         Command="{Binding AnswerCommand}"
+                         CommandParameter="1" >
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding ShuffledAnswers[1]}"/>
+                        <TextBlock Text="{Binding FeedbackSymbols[1]}"
+                                    Margin="10 0 0 0"/>
+
+
+                    </StackPanel>
+
+                </Button>
+
+
+                <Button Margin="5" Padding="10"
+                         Command="{Binding AnswerCommand}"
+                         CommandParameter="2" >
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding ShuffledAnswers[2]}"/>
+                        <TextBlock Text="{Binding FeedbackSymbols[2]}"
+                                    Margin="10 0 0 0"/>
+
+
+                    </StackPanel>
+
+                </Button>
+
+
+                <Button Margin="5" Padding="10"
+                         Command="{Binding AnswerCommand}"
+                         CommandParameter="3" >
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding ShuffledAnswers[3]}"/>
+                        <TextBlock Text="{Binding FeedbackSymbols[3]}"
+                                    Margin="10 0 0 0"/>
+
+
+                    </StackPanel>
+
+                </Button>
 
 
             </UniformGrid>
 
+            <Button Content="Nästa fråga" 
+                    Command="{Binding NextQuestionCommand}"/>
+           
+        </StackPanel>
 
+        <StackPanel Visibility="{Binding IsQuizFinished, Converter={StaticResource BoolToVisibility}}"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center">
 
+            <TextBlock Text="Klart!"
+                       FontSize="30"
+                       FontWeight="Bold"/>
 
-
+            <TextBlock Text="{Binding FinalResult}"
+                       FontSize="22"
+                       Margin="10"/>
         </StackPanel>
         
     </Grid>
+    
 </UserControl>
