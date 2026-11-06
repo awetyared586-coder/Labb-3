@@ -1,4 +1,5 @@
 ﻿using Labb_3code_along.Models;
+using Labb_3code_along.Command;
 using System.Collections.ObjectModel;
 
 
@@ -23,6 +24,15 @@ internal class MainWindowViewModel : ViewModelBase
 
     public PlayerViewModel? PlayerViewModel { get; }
     public ConfigurationViewModel? ConfigurationViewModel { get; }
+    private bool _isConfiguratinMode = true;
+    public bool IsConfigurationMode
+    {
+        get => _isConfiguratinMode;
+        set => SetProperty(ref _isConfiguratinMode, value);
+    }
+
+    public RelayCommand ShowConfigurationCommand { get; }
+    public RelayCommand ShowPlayerCommand { get; }
 
 
     public MainWindowViewModel()
@@ -37,5 +47,7 @@ internal class MainWindowViewModel : ViewModelBase
 
         PlayerViewModel = new PlayerViewModel(this);
         ConfigurationViewModel = new ConfigurationViewModel(this);
+        ShowConfigurationCommand = new RelayCommand(_ => IsConfigurationMode = true);
+        ShowPlayerCommand = new RelayCommand(_ => IsConfigurationMode = false);
     }
 }

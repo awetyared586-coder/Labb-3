@@ -27,6 +27,13 @@
                     <MenuItem Header="Paste"/>
                 </MenuItem>
             </MenuItem>
+            <MenuItem Header="View">
+                <MenuItem Header="Edit"
+                          Command="{Binding ShowConfigurationCommand}"/>
+                <MenuItem Header="Play"
+                          Command="{Binding ShowPlayerCommand}"/>
+
+            </MenuItem>
         </Menu>
     </Grid>
 </UserControl>

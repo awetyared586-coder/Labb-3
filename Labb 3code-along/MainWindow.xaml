@@ -18,7 +18,23 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <views:MenuView Grid.Row="0" />
-        <views:PlayerView Grid.Row="1"/>
+        <views:Confugration Grid.Row="1">
+            <views:Confugration.Style>
+                <Style TargetType="{x:Type views:Confugration}">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding DataContext.IsConfigurationMode,
+                    RelativeSource={RelativeSource AncestorType=Window}}"
+                    Value="True">
+                            <Setter Property="Visibility" Value="Visible"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </views:Confugration.Style>
+        </views:Confugration>
+
+
+
     </Grid>
 </Window>
