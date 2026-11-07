@@ -1,6 +1,7 @@
 ﻿using Labb_3code_along.Models;
 using Labb_3code_along.Command;
 using System.Collections.ObjectModel;
+using System.Windows;
 
 
 namespace Labb_3code_along.ViewModels;
@@ -49,5 +50,9 @@ internal class MainWindowViewModel : ViewModelBase
         ConfigurationViewModel = new ConfigurationViewModel(this);
         ShowConfigurationCommand = new RelayCommand(_ => IsConfigurationMode = true);
         ShowPlayerCommand = new RelayCommand(_ => IsConfigurationMode = false);
+        
+            
+            
+        
     }
 }
