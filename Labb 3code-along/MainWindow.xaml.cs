@@ -1,4 +1,5 @@
 ﻿using Labb_3code_along.Command;
+using Labb_3code_along.Dialog;
 using Labb_3code_along.ViewModels;
 using System.Windows;
 
@@ -13,6 +14,19 @@ namespace Labb_3code_along
         {
         InitializeComponent();
             DataContext = new MainWindowViewModel();
+
+            ((MainWindowViewModel)DataContext).OpenCreatePack += (_, _) =>
+            {
+                var dialog = new CreateNewPackDialog();
+               if ( dialog.ShowDialog() == true)
+                {
+                    ((MainWindowViewModel)DataContext).CreateNewPack(
+                        dialog.PackName,
+                        dialog.SelectedDifficulty);
+
+                }
+            };
+
         }
     }
 

@@ -8,7 +8,7 @@ namespace Labb_3code_along.ViewModels;
 
 internal class MainWindowViewModel : ViewModelBase
 {
-    public ObservableCollection<QuestionPackViewModel> Packs { get; }
+    public ObservableCollection<QuestionPackViewModel> Packs { get; } = new();
 
     private QuestionPackViewModel _activePack;
     public QuestionPackViewModel ActivePack
@@ -34,6 +34,8 @@ internal class MainWindowViewModel : ViewModelBase
 
     public RelayCommand ShowConfigurationCommand { get; }
     public RelayCommand ShowPlayerCommand { get; }
+    public RelayCommand CreateNewPackCommand { get; }
+    public event EventHandler? OpenCreatePack;
 
 
     public MainWindowViewModel()
@@ -45,14 +47,27 @@ internal class MainWindowViewModel : ViewModelBase
         questionPack.Questions.Add(new Question("Vad är 2 + 3?", "5", "10", "8", "1"));
 
         ActivePack = new QuestionPackViewModel(questionPack);
+        Packs.Add(ActivePack);
+
 
         PlayerViewModel = new PlayerViewModel(this);
         ConfigurationViewModel = new ConfigurationViewModel(this);
         ShowConfigurationCommand = new RelayCommand(_ => IsConfigurationMode = true);
         ShowPlayerCommand = new RelayCommand(_ => IsConfigurationMode = false);
-        
-            
-            
-        
+        CreateNewPackCommand = new RelayCommand(_ => RaiseOpenCreatePack());                 
+    }
+
+    private void RaiseOpenCreatePack()
+    {
+        OpenCreatePack?.Invoke(this, EventArgs.Empty);
+    }
+
+    public void CreateNewPack(string name, Difficulty difficulty)
+    {
+        var questionPack = new QuestionPack(name, difficulty);
+        var newPack = new QuestionPackViewModel(questionPack);
+
+        Packs.Add(newPack);
+        ActivePack = newPack;
     }
 }

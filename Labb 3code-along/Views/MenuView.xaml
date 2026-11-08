@@ -11,7 +11,8 @@
     <Grid>
         <Menu>
             <MenuItem Header="_File">
-                <MenuItem Header="_New Question pack" />
+                <MenuItem Header="_New Question pack"
+                          Command="{Binding CreateNewPackCommand}"/>
                 <MenuItem Header="E_xit" InputGestureText="Alt+F4" />
             </MenuItem>
             <MenuItem Header="_Edit">

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Labb_3code_along.Models;
 
-internal enum Difficulty { Easy, Medium, Hard };
+public enum Difficulty { Easy, Medium, Hard };
 
 internal class QuestionPack
 {
