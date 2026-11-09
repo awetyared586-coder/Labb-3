@@ -31,8 +31,9 @@ namespace Labb_3code_along.Dialog
 
         public Difficulty SelectedDifficulty =>
          Enum.Parse<Difficulty>(
-        ((ComboBoxItem)difficultyComboBox.SelectedItem).Content.ToString()!
-    );
+        ((ComboBoxItem)difficultyComboBox.SelectedItem).Content.ToString()! );
+
+        public int TimeLimitInSeconds => (int)timeLimitSlider.Value;
 
 
     }

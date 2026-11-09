@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Labb_3code_along.Dialog"
         mc:Ignorable="d"
-        Title="CreateNewPackDialog" Height="230" Width="280" 
+        Title="CreateNewPackDialog" Height="300" Width="280" 
         ResizeMode="NoResize" WindowStartupLocation="CenterOwner">
 
     <StackPanel>

@@ -35,6 +35,8 @@ internal class MainWindowViewModel : ViewModelBase
     public RelayCommand ShowConfigurationCommand { get; }
     public RelayCommand ShowPlayerCommand { get; }
     public RelayCommand CreateNewPackCommand { get; }
+    public RelayCommand PackOptionsCommand { get;}
+    public event EventHandler? OpenPackOption;
     public event EventHandler? OpenCreatePack;
 
 
@@ -54,17 +56,22 @@ internal class MainWindowViewModel : ViewModelBase
         ConfigurationViewModel = new ConfigurationViewModel(this);
         ShowConfigurationCommand = new RelayCommand(_ => IsConfigurationMode = true);
         ShowPlayerCommand = new RelayCommand(_ => IsConfigurationMode = false);
-        CreateNewPackCommand = new RelayCommand(_ => RaiseOpenCreatePack());                 
+        CreateNewPackCommand = new RelayCommand(_ => RaiseOpenCreatePack());
+        PackOptionsCommand = new RelayCommand(_ => RaiseOpenPackOptions());
     }
 
     private void RaiseOpenCreatePack()
     {
         OpenCreatePack?.Invoke(this, EventArgs.Empty);
     }
-
-    public void CreateNewPack(string name, Difficulty difficulty)
+    private void RaiseOpenPackOptions()
     {
-        var questionPack = new QuestionPack(name, difficulty);
+        OpenPackOption?.Invoke(this, EventArgs.Empty);
+    }
+
+    public void CreateNewPack(string name, Difficulty difficulty, int timeLimitInSeconds)
+    {
+        var questionPack = new QuestionPack(name, difficulty, timeLimitInSeconds);
         var newPack = new QuestionPackViewModel(questionPack);
 
         Packs.Add(newPack);

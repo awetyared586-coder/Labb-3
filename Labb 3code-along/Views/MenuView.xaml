@@ -9,32 +9,52 @@
 
 
     <Grid>
-        <Menu>
+        <Menu Grid.Row="0">
             <MenuItem Header="_File">
                 <MenuItem Header="_New Question pack"
                           Command="{Binding CreateNewPackCommand}"/>
                 <MenuItem Header="E_xit" InputGestureText="Alt+F4" />
             </MenuItem>
             <MenuItem Header="_Edit">
-                <MenuItem 
-                    Header="Set Pack _Name" 
-                    InputGestureText="Ctrl+N"
-                    Command="{Binding ConfigurationViewModel.ChangePackNameCommand}"
-                />
-                <MenuItem Header="Copy"/>
-                <MenuItem Header="Paste"/>
-                <MenuItem Header="Test">
-                    <MenuItem Header="Copy"/>
-                    <MenuItem Header="Paste"/>
-                </MenuItem>
+                
+                <MenuItem Header="_Add Question"
+                          Command="{Binding ConfigurationViewModel.AddQuestionCommand}"/>
+                <MenuItem Header="_Remove Question"
+                          InputGestureText="Delete"
+                          Command="{Binding ConfigurationViewModel.RemoveQuestionCommand}"/>
+                <MenuItem Header="_Pack Options"
+                          Command="{Binding}"/>
+                
             </MenuItem>
             <MenuItem Header="View">
                 <MenuItem Header="Edit"
                           Command="{Binding ShowConfigurationCommand}"/>
                 <MenuItem Header="Play"
                           Command="{Binding ShowPlayerCommand}"/>
-
             </MenuItem>
         </Menu>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Content="➕"
+                    Command="{Binding ConfigurationViewModel.AddQuestionCommand}"
+                    Margin="5"/>
+            <Button Content="➖"
+                    Command="{Binding ConfigurationViewModel.RemoveQuestionCommand}"
+                    Margin="5"/>
+            <Button Content="☰"
+                    Command="{Binding PackOptionsCommand}"
+                    Margin="5"/>
+
+
+
+        </StackPanel>
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        
     </Grid>
+    
 </UserControl>

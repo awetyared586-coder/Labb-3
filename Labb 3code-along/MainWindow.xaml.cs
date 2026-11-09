@@ -22,11 +22,19 @@ namespace Labb_3code_along
                 {
                     ((MainWindowViewModel)DataContext).CreateNewPack(
                         dialog.PackName,
-                        dialog.SelectedDifficulty);
+                        dialog.SelectedDifficulty,
+                        dialog.TimeLimitInSeconds);
 
                 }
             };
 
+            ((MainWindowViewModel)DataContext).OpenPackOption += (_, _) =>
+            {
+                var dialog = new PackOptionsDialog();
+                dialog.DataContext = ((MainWindowViewModel)DataContext).ActivePack;
+                dialog.Owner = this;
+                dialog.ShowDialog();
+            };
         }
     }
 

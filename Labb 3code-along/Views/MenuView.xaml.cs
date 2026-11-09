@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Labb_3code_along.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -21,6 +22,21 @@ namespace Labb_3code_along.View
         public MenuView()
         {
             InitializeComponent();
+            KeyDown += MenuView_KeyDown;
         }
+        private void MenuView_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Delete &&
+                        DataContext is MainWindowViewModel mainViewModel)
+            {
+                mainViewModel.ConfigurationViewModel.RemoveQuestionCommand.Execute(null);
+            }
+        }
+
+
+
+
+        
+
     }
 }
