@@ -13,12 +13,17 @@
     
     <Grid Margin="20">
         <StackPanel Visibility="{Binding IsQuizInProgress, Converter={StaticResource BoolToVisibility}}">
-
-
-            <TextBlock  Text="{Binding QuestionProgress }"
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Right">
+            
+            <TextBlock Text="{Binding QuestionProgress }"
                         FontSize="16"
-                        HorizontalAlignment="Right"
                         Margin="5"/>
+            <TextBlock Text="{Binding TimeRemaining}"
+                       FontSize="16"
+                       Margin="5" />
+
+              </StackPanel>
 
             <TextBlock Text="{Binding CurrentQuestionText}"
                        FontSize="24"
@@ -33,8 +38,7 @@
                            Margin="5"/>
                 <TextBlock Text="{Binding Score}"/>
 
-                <TextBlock Text="Tid kvar:__"/>
-                
+               
             </StackPanel>
 
             

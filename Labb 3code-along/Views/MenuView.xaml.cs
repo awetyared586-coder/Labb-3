@@ -18,25 +18,34 @@ namespace Labb_3code_along.View
     /// Interaction logic for MenuView.xaml
     /// </summary>
     public partial class MenuView : UserControl
+
     {
         public MenuView()
         {
             InitializeComponent();
-            KeyDown += MenuView_KeyDown;
+            PreviewKeyDown += MenuView_PreviewKeyDown;
         }
-        private void MenuView_KeyDown(object sender, KeyEventArgs e)
+
+        private void MenuView_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Delete &&
-                        DataContext is MainWindowViewModel mainViewModel)
-            {
-                mainViewModel.ConfigurationViewModel.RemoveQuestionCommand.Execute(null);
-            }
+            if (DataContext is not MainWindowViewModel vm)
+                return;
+
+            if (e.Key == Key.Delete)
+                vm.ConfigurationViewModel.RemoveQuestionCommand.Execute(null);
+
+            else if (Keyboard.Modifiers == ModifierKeys.Control && e.Key == Key.N)
+                vm.CreateNewPackCommand.Execute(null);
+
+            else if (Keyboard.Modifiers == ModifierKeys.Control && e.Key == Key.O)
+                vm.PackOptionsCommand.Execute(null);
+
+            else
+                return;
+
+            e.Handled = true;
         }
 
-
-
-
-        
 
     }
 }

@@ -13,17 +13,21 @@
             <MenuItem Header="_File">
                 <MenuItem Header="_New Question pack"
                           Command="{Binding CreateNewPackCommand}"/>
+                <MenuItem Header="_Remove Question Pack"
+                          Command="{Binding RemovePackCommand}"/>
                 <MenuItem Header="E_xit" InputGestureText="Alt+F4" />
             </MenuItem>
             <MenuItem Header="_Edit">
                 
                 <MenuItem Header="_Add Question"
+                          InputGestureText="Ctrl+N"
                           Command="{Binding ConfigurationViewModel.AddQuestionCommand}"/>
                 <MenuItem Header="_Remove Question"
                           InputGestureText="Delete"
                           Command="{Binding ConfigurationViewModel.RemoveQuestionCommand}"/>
                 <MenuItem Header="_Pack Options"
-                          Command="{Binding}"/>
+                          InputGestureText="Ctrl+O"
+                          Command="{Binding PackOptionsCommand}"/>
                 
             </MenuItem>
             <MenuItem Header="View">

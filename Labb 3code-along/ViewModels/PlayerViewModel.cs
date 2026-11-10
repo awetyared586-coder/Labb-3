@@ -1,6 +1,7 @@
 ﻿
 using Labb_3code_along.Models;
 using Labb_3code_along.Command;
+using System.Windows.Threading;
 using System.Drawing;
 using System.Windows;
 namespace Labb_3code_along.ViewModels;
@@ -9,6 +10,9 @@ internal class PlayerViewModel : ViewModelBase
 {
     private readonly MainWindowViewModel? _mainWindowViewModel;
 
+    private readonly DispatcherTimer _timer = new();
+    private int _timeRemaining;
+    public string TimeRemaining => _timeRemaining.ToString();
     private int _currentQuestionIndex = 0;
     public int CurrentQuestionIndex => _currentQuestionIndex + 1;
     private int _score = 0;
@@ -64,7 +68,14 @@ internal class PlayerViewModel : ViewModelBase
     {
         _mainWindowViewModel = mainWindowViewModel;
 
-          AnswerCommand = new RelayCommand(AnswerQuestion);
+        _timeRemaining = mainWindowViewModel?.ActivePack.TimeLimitInSeconds ?? 0;
+
+        _timer.Interval = TimeSpan.FromSeconds(1);
+
+        _timer.Tick += Timer_Tick;
+
+
+        AnswerCommand = new RelayCommand(AnswerQuestion);
         NextQuestionCommand = new RelayCommand( _ => NextQuestion());
 
         ShuffleAnswers();
@@ -119,6 +130,10 @@ internal class PlayerViewModel : ViewModelBase
 
 
         _currentQuestionIndex++;
+        _timeRemaining = _mainWindowViewModel?.ActivePack.TimeLimitInSeconds ?? 0;
+        RaisePropertyChanged(nameof(TimeRemaining));
+
+
         ShuffleAnswers();
         RaisePropertyChanged(nameof(ShuffledAnswers));
         RaisePropertyChanged(nameof(CurrentQuestionText));
@@ -128,7 +143,29 @@ internal class PlayerViewModel : ViewModelBase
         _hasAnswered = false;
 
     }
+    private void Timer_Tick(object? sender, EventArgs e)
+    {
+        if (_timeRemaining > 0)
+        {
+            _timeRemaining--;
+            RaisePropertyChanged(nameof(TimeRemaining));
+        }
+        if(_timeRemaining <= 0)
+        {
+            _timer.Stop();
+            _isQuizFinished = true;
+            RaisePropertyChanged(nameof(IsQuizFinished));
+            RaisePropertyChanged(nameof(IsQuizInProgress));
+            RaisePropertyChanged(nameof(FinalResult));
+        }
+    }
+    public void StartTimer()
+    {
+        _timer.Start();
+    }
+   
     
+
 }
 
 

@@ -36,6 +36,7 @@ internal class MainWindowViewModel : ViewModelBase
     public RelayCommand ShowPlayerCommand { get; }
     public RelayCommand CreateNewPackCommand { get; }
     public RelayCommand PackOptionsCommand { get;}
+    public RelayCommand RemovePackCommand { get; }
     public event EventHandler? OpenPackOption;
     public event EventHandler? OpenCreatePack;
 
@@ -55,8 +56,14 @@ internal class MainWindowViewModel : ViewModelBase
         PlayerViewModel = new PlayerViewModel(this);
         ConfigurationViewModel = new ConfigurationViewModel(this);
         ShowConfigurationCommand = new RelayCommand(_ => IsConfigurationMode = true);
-        ShowPlayerCommand = new RelayCommand(_ => IsConfigurationMode = false);
+        ShowPlayerCommand = new RelayCommand(_ =>
+        {
+            IsConfigurationMode = false;
+            PlayerViewModel?.StartTimer();
+        });
+
         CreateNewPackCommand = new RelayCommand(_ => RaiseOpenCreatePack());
+        RemovePackCommand = new RelayCommand(_ => RemoveActivePack(), _ => Packs.Count > 1);
         PackOptionsCommand = new RelayCommand(_ => RaiseOpenPackOptions());
     }
 
@@ -75,6 +82,16 @@ internal class MainWindowViewModel : ViewModelBase
         var newPack = new QuestionPackViewModel(questionPack);
 
         Packs.Add(newPack);
+        RemovePackCommand.RaiseCanExecuteChanged();
         ActivePack = newPack;
     }
+
+    private void RemoveActivePack()
+    {
+        Packs.Remove(ActivePack);
+        RemovePackCommand.RaiseCanExecuteChanged();
+        ActivePack = Packs[0];
+
+    }
+
 }
