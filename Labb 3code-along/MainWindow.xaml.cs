@@ -10,10 +10,32 @@ namespace Labb_3code_along
     /// </summary>
     public partial class MainWindow : Window
     {
+        private bool _allowClose;
         public MainWindow()
         {
         InitializeComponent();
             DataContext = new MainWindowViewModel();
+
+            Loaded += async (_, _) =>
+            {
+                try
+                {
+                    await ((MainWindowViewModel)DataContext).LoadPacksAsync();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(
+                        $"Kunde inte läsa in frågepaketen: {ex.Message}",
+                          "Inläsningsfel",
+                          MessageBoxButton.OK,
+                          MessageBoxImage.Error);
+
+
+                }
+            };
+            
+            Closing += MainWindow_Closing;
+
 
             ((MainWindowViewModel)DataContext).OpenCreatePack += (_, _) =>
             {
@@ -26,7 +48,10 @@ namespace Labb_3code_along
                         dialog.TimeLimitInSeconds);
 
                 }
+               
+
             };
+
 
             ((MainWindowViewModel)DataContext).OpenPackOption += (_, _) =>
             {
@@ -36,8 +61,32 @@ namespace Labb_3code_along
                 dialog.ShowDialog();
             };
         }
+        private async void MainWindow_Closing(
+    object? sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (_allowClose)
+                return;
+
+            e.Cancel = true;
+
+            try
+            {
+                await ((MainWindowViewModel)DataContext).SavePacksAsync();
+
+                _allowClose = true;
+                Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    $"Kunde inte spara frågepaketen: {ex.Message}",
+                    "Sparfel",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error);
+            }
+        }
+
+
     }
-
-
 }
 

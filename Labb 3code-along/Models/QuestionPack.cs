@@ -8,7 +8,15 @@ namespace Labb_3code_along.Models;
 public enum Difficulty { Easy, Medium, Hard };
 
 internal class QuestionPack
+
 {
+    public QuestionPack()
+    {
+        Name = "";
+        Questions = new List<Question>();
+            
+    }
+
     public QuestionPack(string name, Difficulty difficulty = Difficulty.Medium, int timeLimitInSeconds = 30)
     {
         Name = name;

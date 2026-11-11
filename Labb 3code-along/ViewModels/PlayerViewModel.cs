@@ -4,6 +4,7 @@ using Labb_3code_along.Command;
 using System.Windows.Threading;
 using System.Drawing;
 using System.Windows;
+using System.Windows.Controls;
 namespace Labb_3code_along.ViewModels;
 
 internal class PlayerViewModel : ViewModelBase
@@ -14,6 +15,7 @@ internal class PlayerViewModel : ViewModelBase
     private int _timeRemaining;
     public string TimeRemaining => _timeRemaining.ToString();
     private int _currentQuestionIndex = 0;
+    private List<int> _shuffledQuestionIndexes = new();
     public int CurrentQuestionIndex => _currentQuestionIndex + 1;
     private int _score = 0;
     private bool _hasAnswered = false;
@@ -31,6 +33,14 @@ internal class PlayerViewModel : ViewModelBase
         Random.Shared.Shuffle(_shuffledAnswers);
         
     }
+
+    private void ShuffleQuestions()
+    {
+        var indexes = Enumerable.Range(0, TotalQuestions).ToArray();
+        Random.Shared.Shuffle(indexes);
+        _shuffledQuestionIndexes = indexes.ToList();
+
+    }
     public String[] ShuffledAnswers => _shuffledAnswers;
 
     public int Score => _score;
@@ -46,14 +56,16 @@ internal class PlayerViewModel : ViewModelBase
         get => _fedbackSymobol;
         set => SetProperty(ref _fedbackSymobol, value);
     }
-    
+
 
 
 
 
     private Question? CurrentQuestion =>
-
-    _mainWindowViewModel?.ActivePack.Questions[_currentQuestionIndex];
+        _mainWindowViewModel is not null &&
+        _currentQuestionIndex < _shuffledQuestionIndexes.Count
+        ? _mainWindowViewModel.ActivePack.Questions[_shuffledQuestionIndexes[_currentQuestionIndex]]
+        : null;
     public string CurrentQuestionText => CurrentQuestion?.Query ?? "";
     public string CorrectAnswer => CurrentQuestion?.CorrectAnswer ?? "";
     public string IncorrectAnswer1 => CurrentQuestion?.IncorrectAnswers[0] ?? "";
@@ -78,6 +90,7 @@ internal class PlayerViewModel : ViewModelBase
         AnswerCommand = new RelayCommand(AnswerQuestion);
         NextQuestionCommand = new RelayCommand( _ => NextQuestion());
 
+        ShuffleQuestions();
         ShuffleAnswers();
 
     }
@@ -90,10 +103,7 @@ internal class PlayerViewModel : ViewModelBase
         int answerIndex= int.Parse(parameter?.ToString()??"-1");
 
         _hasAnswered= true;
-       
-       
-        
-        
+                  
 
         string? selectedAnswer = _shuffledAnswers[answerIndex];
 
@@ -111,10 +121,6 @@ internal class PlayerViewModel : ViewModelBase
         _feedbackSymbols[Array.IndexOf(_shuffledAnswers, CorrectAnswer)] = "✓";
         RaisePropertyChanged(nameof(FeedbackSymbols));
         
-
-
-
-
     }
     private void NextQuestion()
     {
@@ -162,9 +168,7 @@ internal class PlayerViewModel : ViewModelBase
     public void StartTimer()
     {
         _timer.Start();
-    }
-   
-    
+    }    
 
 }
 

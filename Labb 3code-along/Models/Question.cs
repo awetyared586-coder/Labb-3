@@ -7,12 +7,20 @@ namespace Labb_3code_along.Models;
 
  class Question
 {
+
+    public Question()
+    {
+        Query = "";
+        CorrectAnswer = "";
+        IncorrectAnswers = new string[3];
+    }
+
     public Question(string query, string correctAnswer, string incorrectAnswer1, string incorrectAnswer2, string incorrectAnswer3)
     {
         Query = query;
         CorrectAnswer = correctAnswer;
         IncorrectAnswers = new string[] { incorrectAnswer1, incorrectAnswer2, incorrectAnswer3 };
-        // IncorrectAnswers = [incorrectAnswer1, incorrectAnswer2, incorrectAnswer3]; // Alternativ syntax.
+       
     }
 
     public string Query { get; set; }

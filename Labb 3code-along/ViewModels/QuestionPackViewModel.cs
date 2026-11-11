@@ -56,6 +56,12 @@ internal class QuestionPackViewModel : ViewModelBase
             RaisePropertyChanged();
         }
     }
-
     public ObservableCollection<Question> Questions { get; }
+    public QuestionPack ToModel()
+    {
+        return new QuestionPack(Name, Difficulty, TimeLimitInSeconds)
+        {
+            Questions = Questions.ToList()
+        };
+    }
 }

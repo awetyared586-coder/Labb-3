@@ -1,13 +1,22 @@
 ﻿using Labb_3code_along.Models;
 using Labb_3code_along.Command;
 using System.Collections.ObjectModel;
+using Labb_3code_along.Data;
+using System.IO;
 using System.Windows;
 
 
 namespace Labb_3code_along.ViewModels;
 
 internal class MainWindowViewModel : ViewModelBase
+   
 {
+    private static readonly string AppFolder =
+        Path.Combine(
+            Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+            "QuizConfigurator");
+    private static readonly string JsonFilePath =
+        Path.Combine(AppFolder, "questionpacks.json");
     public ObservableCollection<QuestionPackViewModel> Packs { get; } = new();
 
     private QuestionPackViewModel _activePack;
@@ -93,5 +102,35 @@ internal class MainWindowViewModel : ViewModelBase
         ActivePack = Packs[0];
 
     }
+    public async Task SavePacksAsync()
+    {
+        Directory.CreateDirectory(AppFolder);
+        var packs = Packs.Select(pack=> pack.ToModel()).ToList();
+        await JsonFileHandler.SaveAsync(JsonFilePath, packs);
+    }
+    public async Task LoadPacksAsync()
+    {
+        if (!File.Exists(JsonFilePath))
+        {
+            await SavePacksAsync();
+            return;
+        }
 
+        var loadedPacks = await JsonFileHandler.LoadAsync(JsonFilePath);
+
+        Packs.Clear();
+
+        foreach (var pack in loadedPacks)
+        {
+            Packs.Add(new QuestionPackViewModel(pack));
+        }
+
+        if (Packs.Count > 0)
+        {
+            ActivePack = Packs[0];
+        }
+
+    }
 }
+
+
