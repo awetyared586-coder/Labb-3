@@ -25,6 +25,12 @@ namespace Labb_3code_along.Dialog
 
         private void CreatePackButton_Click(object sender, RoutedEventArgs e)
         {
+            if (string.IsNullOrWhiteSpace(packNameTextBox.Text))
+            {
+                MessageBox.Show("Please enter a pack name.");
+                return;
+            }
+
             DialogResult = true;
         }
         public string PackName => packNameTextBox.Text;
