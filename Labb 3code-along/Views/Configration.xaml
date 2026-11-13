@@ -25,6 +25,7 @@
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding Query}"/>
+                        
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
@@ -35,7 +36,11 @@
                     IsEnabled="{Binding HasSelectedQuestion}">
             
             <TextBlock Text="Fråga:" Margin="20,70,10,0"/>
-            <TextBox  Margin="20 0 10 20 " Text="{Binding SelectedQuestion.Query, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <TextBox  Margin="20 0 10 20 "
+                      Height="40"
+                      TextWrapping="Wrap"
+                      AcceptsReturn="True"
+                      Text="{Binding SelectedQuestion.Query, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             <TextBlock Text="Rätt svar:" Margin="50,10,50,0"/>
             <TextBox Margin="50 10 50 0 " Text="{Binding SelectedQuestion.CorrectAnswer,  Mode=TwoWay,  UpdateSourceTrigger=PropertyChanged}" />
             <TextBlock Text="Felaktigt svar 1:" Margin="50,10,50,0"/>
@@ -45,6 +50,7 @@
             <TextBlock Text="Felaktigt svar 3:" Margin="50,10,50,0"/>
             <TextBox Margin="50 10 50 0 " Text="{Binding SelectedQuestion.IncorrectAnswers[2], Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
 
+            
         </StackPanel>
         
 

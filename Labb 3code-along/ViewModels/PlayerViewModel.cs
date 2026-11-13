@@ -45,7 +45,7 @@ internal class PlayerViewModel : ViewModelBase
 
     public int Score => _score;
     public string FinalResult => _isQuizFinished  
-        ?$"Du fick{_score} av {TotalQuestions} rätt!":"";
+        ?$"Du fick {_score} av {TotalQuestions} rätt!":"";
     public bool IsQuizInProgress => !_isQuizFinished;
    
 
@@ -147,28 +147,38 @@ internal class PlayerViewModel : ViewModelBase
         _feedbackSymbols = new string[4];
         RaisePropertyChanged(nameof(FeedbackSymbols));
         _hasAnswered = false;
+        _timer.Start();
 
     }
     private void Timer_Tick(object? sender, EventArgs e)
     {
-        if (_timeRemaining > 0)
-        {
-            _timeRemaining--;
-            RaisePropertyChanged(nameof(TimeRemaining));
-        }
-        if(_timeRemaining <= 0)
+        _timeRemaining--;
+        RaisePropertyChanged(nameof(TimeRemaining));
+
+        if (_timeRemaining <= 0)
         {
             _timer.Stop();
-            _isQuizFinished = true;
-            RaisePropertyChanged(nameof(IsQuizFinished));
-            RaisePropertyChanged(nameof(IsQuizInProgress));
-            RaisePropertyChanged(nameof(FinalResult));
+            _hasAnswered = true;
+            _feedbackSymbols[Array.IndexOf(_shuffledAnswers, CorrectAnswer)] = "✓";
+            RaisePropertyChanged(nameof(FeedbackSymbols));
         }
     }
     public void StartTimer()
     {
+        if (TotalQuestions == 0)
+            return;
+
+        _currentQuestionIndex = 0;
+        ShuffleQuestions();
+        ShuffleAnswers();
+
+        RaisePropertyChanged(nameof(CurrentQuestionText));
+        RaisePropertyChanged(nameof(ShuffledAnswers));
+        RaisePropertyChanged(nameof(QuestionProgress));
+
         _timer.Start();
-    }    
+    }
+
 
 }
 

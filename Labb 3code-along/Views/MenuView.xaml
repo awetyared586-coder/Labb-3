@@ -25,7 +25,8 @@
                 <MenuItem Header="_Remove Question"
                           InputGestureText="Delete"
                           Command="{Binding ConfigurationViewModel.RemoveQuestionCommand}"/>
-                <MenuItem Header="_Pack Options"
+                
+                <MenuItem Header="Pack _Options"
                           InputGestureText="Ctrl+O"
                           Command="{Binding PackOptionsCommand}"/>
                 

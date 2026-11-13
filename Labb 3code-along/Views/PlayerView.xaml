@@ -13,15 +13,19 @@
     
     <Grid Margin="20">
         <StackPanel Visibility="{Binding IsQuizInProgress, Converter={StaticResource BoolToVisibility}}">
-            <StackPanel Orientation="Horizontal"
-                        HorizontalAlignment="Right">
+            
+            <StackPanel >
             
             <TextBlock Text="{Binding QuestionProgress }"
+                       HorizontalAlignment="Center"
+                       TextAlignment="Center"
                         FontSize="16"
                         Margin="5"/>
+                
             <TextBlock Text="{Binding TimeRemaining}"
+                       HorizontalAlignment="Right"
                        FontSize="16"
-                       Margin="5" />
+                       Margin="15" />
 
               </StackPanel>
 
@@ -47,15 +51,14 @@
              <Button Margin="5" Padding="10"
                          Command="{Binding AnswerCommand}"
                          CommandParameter="0" >
-                 <Grid>
-                    <TextBlock Text="{Binding ShuffledAnswers[0]}"/>
+                    <StackPanel>
+                        <TextBlock Text="{Binding ShuffledAnswers[0]}"/>
                     <TextBlock Text="{Binding FeedbackSymbols[0]}"
-                               HorizontalAlignment="Right"
-                               VerticalAlignment="Top"
+                               Margin="10 0 0 0"
                                />
-                
 
-                 </Grid>
+
+                    </StackPanel>
 
              </Button>
 
